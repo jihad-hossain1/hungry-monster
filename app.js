@@ -1,15 +1,19 @@
 
 //------------- handle search button-----------
 const searchFood = () => {
-    const searchField = document.getElementById('mealInput'); 
-    const searchData = searchField.value      
+    const searchField = document.getElementById('mealInput');
+    const searchData = searchField.value
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchData}`;
     fetch(url)
-    .then(res => res.json())
-    .then(data => displayMealInfo(data))
+        .then(res => res.json())
+        .then(data => {
+            console.log(data.meals);
+            displayMealInfo(data.meals)
+        })
 }
 
 const displayMealInfo = mealData => {
+    console.log(mealData);
     const mealContainer = document.getElementById('mealCard');
     mealData.forEach(item => {
         const foodItemName = document.createElement('div');
@@ -30,9 +34,9 @@ const displayMealInfo = mealData => {
 
 //API Call by fetch for meal ingredients 
 
-const mealIngredientsInfo = mealItemName => { 
+const mealIngredientsInfo = mealItemName => {
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItemName}`;
-fetch(url)
+    fetch(url)
         .then(response => response.json())
         .then(data => displayDetails(data))
 }
